@@ -7,6 +7,15 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="MY Son 손흥민" />
+        android:gravity="center_horizontal"
+        android:textSize="18dp"
+        android:padding="6dp"
+        android:textStyle="bold"
+        android:text="유세인트 로그인" />
+
+    <WebView
+        android:id="@+id/usaint_login_wv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
