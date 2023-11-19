@@ -1,19 +1,16 @@
 /*
-2023-11-15
-Activity: usaintLogin
-
-주의사항
-1. WebView type 변수 class field에 선언 불가능
-2. WebView visibility VISIBLE일 때만 getHtml 가능
+2023-11-15: Class UsaintLogin
+2023-11-20: UsaintLogin Class -> LoginWebPageActivity
  */
-
 
 package com.example.usaintauth;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.webkit.WebView;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,9 +19,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WebView wv = findViewById(R.id.usaint_login_wv);
-        UsaintLoginWebPage loginWebPage = new UsaintLoginWebPage();
-        loginWebPage.setLoginPage(wv);
-        loginWebPage.loadLoginPage(wv);
+        Button btn = findViewById(R.id.login_btn);
+        btn.setOnClickListener(v ->
+                startActivityForResult(new Intent(MainActivity.this, LoginWebPageActivity.class), 200));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 200 && resultCode == RESULT_OK) {
+            //TODO After code merging, second parameter will be changed to MainActivity(==rent_main)
+            startActivity(new Intent(MainActivity.this, MainActivity.class));
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
