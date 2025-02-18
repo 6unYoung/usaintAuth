@@ -1,10 +1,8 @@
 /*
+2023-11-20:
 Warning
 1. WebView variable is not defined by class field.
 2. WebView can getHtml() when its visibility is VISIBLE.
-
-2023-11-20
-TODO list check plz.
  */
 
 package com.example.usaintauth;
@@ -47,14 +45,14 @@ public class LoginWebPageActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     void setLoginPage(@NonNull WebView webView, Intent intentForResult) {
-        webView.getSettings().setLoadWithOverviewMode(true);                                        // html content를 WebView 크기에 맞추도록 설정 - setUseWideViewPort 와 같이 써야 함
+        webView.getSettings().setLoadWithOverviewMode(true);                                        // html content를 WebView 크기에 맞추도록 설정, setUseWideViewPort 와 같이 써야 함
         webView.getSettings().setUseWideViewPort(true);                                             // setLoadWithOverviewMode 와 같이 써야 함
         webView.getSettings().setSupportZoom(false);
         webView.getSettings().setBuiltInZoomControls(false);                                        // 줌 확대/축소 버튼 여부
         webView.getSettings().setSupportMultipleWindows(true);                                      // 멀티 윈도우 사용 여부
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);                       // javascript가 window.open()을 사용할 수 있도록 설정
-        webView.addJavascriptInterface(new MyJavaScriptInterface(), "Android");               // name parameter must be same as view.loadUrl(*.Android.*)
+        webView.addJavascriptInterface(new MyJavaScriptInterface(), "Android");               // Name parameter must be same as view.loadUrl(*.Android.*)
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -73,8 +71,8 @@ public class LoginWebPageActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 if (isLoginSuccessful(url)) {
-                    view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('body')[0].innerHTML);");     // call MyJavaScriptInterface.getHtml(html)
-                    //TODO database에 studentInfo 업로드하는 code 작성
+                    view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('body')[0].innerHTML);");     // Call MyJavaScriptInterface.getHtml(html)
+                    //TODO: database에 studentInfo 업로드하는 code 작성
                 }
                 super.onPageFinished(view, url);
             }
@@ -95,6 +93,7 @@ public class LoginWebPageActivity extends AppCompatActivity {
         return url.equals("https://saint.ssu.ac.kr/irj/portal");
     }
 
+
     private class MyJavaScriptInterface {
         @JavascriptInterface
         public void getHtml(String html) {
@@ -104,7 +103,7 @@ public class LoginWebPageActivity extends AppCompatActivity {
             Log.d("park", "StudentName:" + studentName);
 
             Elements scriptElements = doc.getElementsByTag("script");
-            Pattern pattern = Pattern.compile("\"LogonUid\":\"([^,]*)\"");   //find the line which contains "LogonUid":"12345678",
+            Pattern pattern = Pattern.compile("\"LogonUid\":\"([^,]*)\"");   // Find the line which contains "LogonUid":"12345678"
             Matcher matcher = null;
             for (Element element : scriptElements) {
                 if (element.data().contains("LogonUid")) {
