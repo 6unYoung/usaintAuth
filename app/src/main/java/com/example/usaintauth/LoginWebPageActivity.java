@@ -93,7 +93,7 @@ public class LoginWebPageActivity extends AppCompatActivity {
         return url.equals("https://saint.ssu.ac.kr/irj/portal");
     }
 
-
+    
     private class MyJavaScriptInterface {
         @JavascriptInterface
         public void getHtml(String html) {
